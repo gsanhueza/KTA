@@ -8,7 +8,7 @@
 /**
  * Spider component class
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class KTA_API USpiderComponent : public UEnemyComponent
 {
 	GENERATED_BODY()

@@ -50,6 +50,11 @@ void UEnemyComponent::ReceiveDamage(float Damage,
 	UE_LOG(LogTemp, Warning, TEXT("Player getting damage from %s"), *DamageCauser->GetActorClass()->GetFName().ToString())
 }
 
+bool UEnemyComponent::Dead()
+{
+	return dead;
+}
+
 
 
 

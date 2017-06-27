@@ -36,6 +36,10 @@ public:
 		 class AController * InstigatedBy,
 		 AActor * DamageCauser);
 
+	UFUNCTION(BlueprintCallable, Exec, Category = "Enemy")
+	bool Dead();
+
+
 protected:
 
 	int maxHealth;
@@ -43,4 +47,6 @@ protected:
 	int enemyDamage;	
 	bool attacking;
 	bool dead;
+	float velocity;
+	FVector movementDirection;
 };
