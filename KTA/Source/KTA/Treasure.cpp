@@ -3,26 +3,42 @@
 #include "KTA.h"
 #include "Treasure.h"
 
-
-// Sets default values
-ATreasure::ATreasure()
+// Sets default values for this component's properties
+UTreasure::UTreasure()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
+	PrimaryComponentTick.bCanEverTick = true;
 }
 
-// Called when the game starts or when spawned
-void ATreasure::BeginPlay()
+
+// Called when the game starts
+void UTreasure::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
-void ATreasure::Tick(float DeltaTime)
+void UTreasure::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::Tick(DeltaTime);
-
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
+bool UTreasure::isDead()
+{
+	return dead;
+}
+
+void UTreasure::ReceiveDamage(float Damage,
+	const class UDamageType * DamageType,
+	class AController * InstigatedBy,
+	AActor * DamageCauser)
+{
+
+	UE_LOG(LogTemp, Warning, TEXT("Treasure getting damage from %s"), *DamageCauser->GetActorClass()->GetFName().ToString())
+}
+
+bool UTreasure::Dead()
+{
+	return dead;
+}

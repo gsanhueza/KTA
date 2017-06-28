@@ -19,7 +19,6 @@ void UEnemyComponent::BeginPlay()
 	Super::BeginPlay();
 }
 
-
 // Called every frame
 void UEnemyComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
@@ -47,14 +46,10 @@ void UEnemyComponent::ReceiveDamage(float Damage,
 	AActor * DamageCauser)
 {
 
-	UE_LOG(LogTemp, Warning, TEXT("Player getting damage from %s"), *DamageCauser->GetActorClass()->GetFName().ToString())
+	UE_LOG(LogTemp, Warning, TEXT("Enemy getting damage from %s"), *DamageCauser->GetActorClass()->GetFName().ToString())
 }
 
 bool UEnemyComponent::Dead()
 {
 	return dead;
 }
-
-
-
-

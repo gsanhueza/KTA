@@ -41,7 +41,6 @@ public:
 
 
 protected:
-
 	int maxHealth;
 	int currentHealth;
 	int enemyDamage;	
