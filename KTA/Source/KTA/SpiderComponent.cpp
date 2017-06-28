@@ -23,11 +23,9 @@ void USpiderComponent::BeginPlay()
 	attacking = false;
 	dead = false;
 	maxHealth = 20;
-	currentHealth = 0;
+	currentHealth = 20;
 	enemyDamage = 2;		
 	velocity = 3;
-
-	movementDirection = FVector(1, 0, 0);
 
 }
 

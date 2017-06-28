@@ -17,6 +17,8 @@ UEnemyComponent::UEnemyComponent()
 void UEnemyComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	Owner = GetOwner();
+	shouldTurn = false;
 }
 
 
@@ -24,6 +26,30 @@ void UEnemyComponent::BeginPlay()
 void UEnemyComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+
+
+	if (shouldTurn && !attacking) {
+		accumulator += DeltaTime;
+		FVector MyLoc = Owner->GetActorLocation();
+		FVector TargetLoc = movementDirection.GetLocation();
+		FVector Dir = (TargetLoc - MyLoc);
+		Dir.Normalize();
+		if (accumulator > 2) {
+			shouldTurn = false;
+			UE_LOG(LogTemp, Warning, TEXT("Finished rotating"))
+			accumulator = 0;
+		}
+		//UE_LOG(LogTemp, Warning, TEXT( "%s velocity"), *Owner->GetVelocity().ToString())
+		UCapsuleComponent *movementComponent;
+		movementComponent = ((ACharacter *)Owner)->GetCapsuleComponent();
+
+		movementComponent->SetPhysicsLinearVelocity(Dir * 100);
+		movementComponent->SetRelativeRotation(FMath::Lerp(Owner->GetActorRotation(), Dir.Rotation(), 0.01f));
+
+	}
+
+	
+
 }
 
 float UEnemyComponent::getDamage()
@@ -46,14 +72,41 @@ void UEnemyComponent::ReceiveDamage(float Damage,
 	class AController * InstigatedBy,
 	AActor * DamageCauser)
 {
+	currentHealth -= Damage;
 
-	UE_LOG(LogTemp, Warning, TEXT("Player getting damage from %s"), *DamageCauser->GetActorClass()->GetFName().ToString())
+	if (currentHealth <= 0) {
+		dead = true;
+	}
+
 }
 
 bool UEnemyComponent::Dead()
 {
 	return dead;
 }
+
+float UEnemyComponent::getCurrentHealth()
+{
+	return currentHealth;
+}
+
+float UEnemyComponent::getMaxHealth()
+{
+	return maxHealth;
+}
+
+void UEnemyComponent::setAttacking(bool attack)
+{
+	this->attacking = attack;
+}
+
+void UEnemyComponent::setNextDirection(AActor * NextDirection)
+{
+	movementDirection = NextDirection->GetTransform();
+	shouldTurn = true;
+
+}
+
 
 
 
